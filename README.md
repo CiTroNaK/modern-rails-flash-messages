@@ -1,24 +1,5 @@
-# README
+## Modern Rails flash messages
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This Rails app contains code from articles [Modern Rails flash messages](https://dev.to/citronak/series/8559).
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+![Example](https://dev-to-uploads.s3.amazonaws.com/i/3p2sp78pute2vimhj5ui.gif)

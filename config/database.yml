@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: modern_rails_flash_messages_production
-  username: modern_rails_flash_messages
-  password: <%= ENV['MODERN_RAILS_FLASH_MESSAGES_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>

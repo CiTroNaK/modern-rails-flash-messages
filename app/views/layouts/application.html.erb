@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ModernRailsFlashMessages</title>
+    <title>Modern Rails Flash Messages</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,51 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="min-h-screen bg-white">
+      <nav class="bg-white border-b border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16">
+            <div class="flex">
+              <div class="flex-shrink-0 flex items-center">
+                <a href="<%= root_path %>">Modern Rails flash messages</a>
+              </div>
+              <div class="hidden sm:-my-px sm:ml-6 space-x-8 sm:flex">
+                <a href="<%= posts_path %>" class="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-500 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
+                  Posts
+                </a>
+                <a href="https://dev.to/citronak/series/8559" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
+                  Read how to
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="py-10">
+        <header>
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold leading-tight text-gray-900">
+              <%= yield(:title) %>
+            </h1>
+          </div>
+        </header>
+        <main>
+          <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="px-4 py-8 sm:px-0">
+              <%= yield %>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div class="fixed inset-0 px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end">
+      <div id="notifications" class="flex flex-col items-end justify-center">
+        <% flash.each do |type, data| %>
+          <%= render NotificationComponent.new(type: type, data: data) %>
+        <% end %>
+      </div>
+    </div>
   </body>
 </html>

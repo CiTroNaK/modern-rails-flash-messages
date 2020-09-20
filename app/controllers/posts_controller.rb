@@ -25,7 +25,12 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, success: 'Post was successfully created.' }
+        flash = {
+          title: "#{@post.title} was successfully created.",
+          body: 'You can go to the edit page with the button below.',
+          action: { url: edit_post_path(@post), method: 'get', name: 'Edit' }
+        }
+        format.html { redirect_to posts_url, success: flash }
       else
         format.html { render :new }
       end
@@ -36,7 +41,12 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, success: 'Post was successfully updated.' }
+        flash = {
+          title: "#{@post.title} was successfully updated.",
+          body: 'You can view it with the button below.',
+          action: { url: post_path(@post), method: 'get', name: 'View' }
+        }
+        format.html { redirect_to posts_url, success: flash }
       else
         format.html { render :edit }
       end

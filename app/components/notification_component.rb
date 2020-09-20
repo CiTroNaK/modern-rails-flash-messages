@@ -45,7 +45,7 @@ class NotificationComponent < ViewComponent::Base
   def prepare_data(data)
     case data
     when Hash
-      data
+      data.deep_symbolize_keys
     else
       { title: data }
     end

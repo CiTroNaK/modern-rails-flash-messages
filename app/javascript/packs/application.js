@@ -8,6 +8,17 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
+import '../css/application'
+
+// Fontawesome
+import { config, library, dom } from '@fortawesome/fontawesome-svg-core'
+// Change the config to fix the flicker
+config.mutateApproach = 'sync'
+// Import icons
+import { faInfoCircle, faCheckCircle, faExclamationCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
+library.add(faInfoCircle, faCheckCircle, faExclamationCircle, faExclamationTriangle)
+// Load icons
+dom.watch()
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)

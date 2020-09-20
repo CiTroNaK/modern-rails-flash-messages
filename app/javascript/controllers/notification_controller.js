@@ -43,20 +43,36 @@ export default class extends Controller {
         "X-CSRF-Token": this.csrfToken
       },
     })
-      .then(function (response) {
-        let content;
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response;
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Set new content
+        _this.buttonsTarget.innerHTML = '<span class="text-sm leading-5 font-medium text-green-700">' + data.message + '</span>';
 
-        // Example of the response, content should be provided from the controller
-        if (response.status === 200) {
-          content = '<span class="text-sm leading-5 font-medium text-green-700">Done!</span>'
-        } else {
-          content = '<span class="text-sm leading-5 font-medium text-red-700">Error!</span>'
+        // Remove hidden class and display the record
+        if (data.inline) {
+          document.querySelector('[data-key$="' + data.record_id + '"]').classList.toggle('hidden');
         }
 
-        // Set new content
-        _this.buttonsTarget.innerHTML = content;
-
         // Close
+        setTimeout(() => {
+          if (data.inline) {
+            // Just close the notification
+            _this.close();
+          } else {
+            // Reload the page using Turbolinks
+            Turbolinks.visit(window.location.toString(), {action: 'replace'})
+          }
+        }, 1000);
+      })
+      .catch(error => {
+        console.log(error);
+        _this.buttonsTarget.innerHTML = '<span class="text-sm leading-5 font-medium text-red-700">Error!</span>';
         setTimeout(() => {
           _this.close();
         }, 1000);

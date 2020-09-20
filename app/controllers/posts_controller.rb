@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
+    @posts = Post.active.all
   end
 
   # GET /posts/1
@@ -55,13 +55,35 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1
   def destroy
-    @post.destroy
+    post = Post.active.find(params[:id])
+    job_id = post.schedule_destroy
+
     respond_to do |format|
-      format.html { redirect_to posts_url, success: 'Post was successfully destroyed.' }
+      format.html do
+        flash[:success] = flash_message_with_undo(job_id: job_id, post: post)
+        redirect_to posts_url
+      end
+      format.js do
+        flash.now[:success] = flash_message_with_undo(job_id: job_id, post: post, inline: true)
+        render :destroy, locals: { post: post }
+      end
     end
   end
 
   private
+
+  def flash_message_with_undo(job_id:, post:, inline: nil)
+    {
+      title: "Post #{post.title} was removed",
+      body: 'You can recover it using the undo action below.',
+      timeout: Post::UNDO_TIMEOUT, countdown: true,
+      action: {
+        url: undo_path(job_id, inline: inline),
+        method: 'delete',
+        name: 'Undo'
+      }
+    }
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_post

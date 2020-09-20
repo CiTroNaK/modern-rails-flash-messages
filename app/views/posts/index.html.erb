@@ -16,11 +16,11 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <% @posts.each do |post| %>
-                <tr>
+                <tr data-key="post_<%= post.id %>">
                   <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900"><%= post.title %></td>
                   <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium"><%= link_to 'Show', post, class: 'text-indigo-600 hover:text-indigo-900' %></td>
                   <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium"><%= link_to 'Edit', edit_post_path(post), class: 'text-indigo-600 hover:text-indigo-900' %></td>
-                  <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium"><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-indigo-600 hover:text-indigo-900' %></td>
+                  <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium"><%= link_to 'Destroy', post, method: :delete, remote: true, class: 'text-red-600 hover:text-red-900' %></td>
                 </tr>
               <% end %>
             </tbody>

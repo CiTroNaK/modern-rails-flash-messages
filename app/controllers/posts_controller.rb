@@ -57,33 +57,10 @@ class PostsController < ApplicationController
   def destroy
     post = Post.active.find(params[:id])
     job_id = post.schedule_destroy
-
-    respond_to do |format|
-      format.html do
-        flash[:success] = flash_message_with_undo(job_id: job_id, post: post)
-        redirect_to posts_url
-      end
-      format.js do
-        flash.now[:success] = flash_message_with_undo(job_id: job_id, post: post, inline: true)
-        render :destroy, locals: { post: post }
-      end
-    end
+    destroy_with_undo_response(record: post, job_id: job_id, redirect: posts_path)
   end
 
   private
-
-  def flash_message_with_undo(job_id:, post:, inline: nil)
-    {
-      title: "Post #{post.title} was removed",
-      body: 'You can recover it using the undo action below.',
-      timeout: Post::UNDO_TIMEOUT, countdown: true,
-      action: {
-        url: undo_path(job_id, inline: inline),
-        method: 'delete',
-        name: 'Undo'
-      }
-    }
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_post

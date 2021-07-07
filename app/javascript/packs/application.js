@@ -5,8 +5,10 @@
 
 require("@rails/ujs").start()
 import "@hotwired/turbo-rails"
-require("@rails/activestorage").start()
-require("channels")
+import '../misc/turbo-actions' // Custom turbo actions
+
+// require("@rails/activestorage").start()
+// require("channels")
 
 import '../css/application'
 

@@ -1,7 +1,0 @@
-// finding and hiding the record
-document.getElementById('<%= dom_id(post) %>').classList.toggle('hidden');
-
-// displaying the notification
-<% flash.each do |type, data|  %>
-document.getElementById('notifications').insertAdjacentHTML("afterBegin", "<%=j render(NotificationComponent.new(type: type, data: data)) %>");
-<% end %>

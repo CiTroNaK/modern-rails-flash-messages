@@ -1,0 +1,7 @@
+<turbo-stream action="addclass" target="<%= dom_id(record) %>">
+  <template>hidden</template>
+</turbo-stream>
+
+<% flash.each do |type, data| %>
+  <%= turbo_stream.prepend('notifications', render(NotificationComponent.new(type: type, data: data))) %>
+<% end %>

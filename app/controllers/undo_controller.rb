@@ -34,8 +34,7 @@ class UndoController < ApplicationController
     {
       message: inline ? 'Done!' : 'Done! Reloading the page...',
       inline: inline,
-      record_id: (job.item['args'][1] if job),
-      record_class: (job.item['args'][0] if job)
+      dom_id: ("#{job.item["args"][0].underscore}_#{job.item["args"][1]}" if job)
     }
   end
 end

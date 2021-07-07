@@ -4,7 +4,7 @@
 
 @import "tailwindcss/utilities";
 
-// Countdown animation for notification controller
+/* Notifications Start */
 @keyframes notification-countdown {
   from {
     width: 100%;
@@ -13,3 +13,37 @@
     width: 0;
   }
 }
+
+.notification-enter {
+  @apply transform ease-out duration-300 transition;
+}
+
+.notification-enter-from {
+  @apply translate-y-2 opacity-0;
+}
+
+.notification-enter-to {
+  @apply translate-y-0 opacity-100;
+}
+
+@screen sm {
+  .notification-enter-from {
+    @apply translate-y-0 translate-x-2;
+  }
+  .notification-enter-to {
+    @apply translate-x-0;
+  }
+}
+
+.notification-leave {
+  @apply transition ease-in duration-100;
+}
+
+.notification-leave-from {
+  @apply opacity-100;
+}
+
+.notification-leave-to {
+  @apply opacity-0;
+}
+/* Notifications End */

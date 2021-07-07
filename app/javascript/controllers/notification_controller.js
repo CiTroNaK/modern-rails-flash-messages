@@ -6,26 +6,24 @@ export default class extends Controller {
   connect() {
     const timeoutSeconds = parseInt(this.data.get("timeout"));
 
-    if (!this.isPreview) {
+    setTimeout(() => {
+      this.element.classList.remove('hidden');
+      this.element.classList.add('notification-enter', 'notification-enter-from');
+
+      // Trigger transition
       setTimeout(() => {
-        this.element.classList.remove('hidden');
-        this.element.classList.add('transform', 'ease-out', 'duration-300', 'transition', 'translate-y-2', 'opacity-0', 'sm:translate-y-0', 'sm:translate-x-2');
+        this.element.classList.add('notification-enter-to');
+      }, 100);
 
-        // Trigger transition
-        setTimeout(() => {
-          this.element.classList.add('translate-y-0', 'opacity-100', 'sm:translate-x-0');
-        }, 100);
+      // Trigger countdown
+      if (this.hasCountdownTarget) {
+        this.countdownTarget.style.animation = 'notification-countdown linear ' + timeoutSeconds + 's';
+      }
 
-        // Trigger countdown
-        if (this.hasCountdownTarget) {
-          this.countdownTarget.style.animation = 'notification-countdown linear ' + timeoutSeconds + 's';
-        }
-
-      }, 500);
-      this.timeoutId = setTimeout(() => {
-        this.close();
-      }, timeoutSeconds * 1000 + 500);
-    }
+    }, 500);
+    this.timeoutId = setTimeout(() => {
+      this.close();
+    }, timeoutSeconds * 1000 + 500);
   }
 
   run(e) {
@@ -56,7 +54,7 @@ export default class extends Controller {
 
         // Remove hidden class and display the record
         if (data.inline) {
-          document.querySelector('[data-key$="' + data.record_id + '"]').classList.toggle('hidden');
+          document.getElementById(data.dom_id).classList.toggle('hidden');
         }
 
         // Close
@@ -65,8 +63,8 @@ export default class extends Controller {
             // Just close the notification
             _this.close();
           } else {
-            // Reload the page using Turbolinks
-            Turbolinks.visit(window.location.toString(), {action: 'replace'})
+            // Reload the page using Turbo
+            window.Turbo.visit(window.location.toString(), {action: 'replace'})
           }
         }, 1000);
       })
@@ -84,24 +82,25 @@ export default class extends Controller {
     this.timeoutId = null
   }
 
+  continue() {
+    this.timeoutId = setTimeout(() => {
+      this.close();
+    }, parseInt(this.data.get("timeout")));
+  }
+
   close() {
-    // Remove with transition
-    this.element.classList.remove('transform', 'ease-out', 'duration-300', 'translate-y-2', 'opacity-0', 'sm:translate-y-0', 'sm:translate-x-2', 'translate-y-0', 'sm:translate-x-0');
-    this.element.classList.add('ease-in', 'duration-100')
+    this.element.classList.remove('notification-enter', 'notification-enter-from', 'notification-enter-to');
+    this.element.classList.add('notification-leave', 'notification-leave-from')
 
     // Trigger transition
     setTimeout(() => {
-      this.element.classList.add('opacity-0');
+      this.element.classList.add('notification-leave-to');
     }, 100);
 
     // Remove element after transition
     setTimeout(() => {
       this.element.remove();
     }, 300);
-  }
-
-  get isPreview() {
-    return document.documentElement.hasAttribute('data-turbolinks-preview')
   }
 
   get csrfToken() {

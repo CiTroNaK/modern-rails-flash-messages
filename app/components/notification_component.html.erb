@@ -1,4 +1,4 @@
-<div class="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto mt-4 hidden" data-notification-action-url="<%= @data.dig(:action, :url) %>" data-notification-action-method="<%= @data.dig(:action, :method) %>" data-notification-timeout="<%= @data[:timeout] %>" data-controller="notification">
+<div class="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto mt-4 hidden" data-turbo-cache="false" data-notification-action-url="<%= @data.dig(:action, :url) %>" data-notification-action-method="<%= @data.dig(:action, :method) %>" data-notification-timeout="<%= @data[:timeout] %>" data-controller="notification">
   <div class="rounded-lg shadow-xs overflow-hidden">
     <div class="p-4">
       <div class="flex items-start">
@@ -17,8 +17,8 @@
             </p>
           <% end %>
           <% if @data[:action].present? %>
-            <div class="mt-2" data-target="notification.buttons">
-              <a <% if @data.dig(:action, :method) == 'get' %> href="<%= @data.dig(:action, :url) %>" <% else %> href="#" data-action="notification#run" <% end %> class="text-sm leading-5 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+            <div class="mt-2" data-notification-target="buttons">
+              <a data-turbo-frame="_top" <% if @data.dig(:action, :method) == 'get' %> href="<%= @data.dig(:action, :url) %>" <% else %> href="#" data-action="notification#run" <% end %> class="text-sm leading-5 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
                 <%= @data.dig(:action, :name) %>
               </a>
               <button data-action="notification#close" class="ml-6 text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:underline transition ease-in-out duration-150">
@@ -35,7 +35,7 @@
       </div>
     </div>
     <% if @data[:countdown] %>
-      <div class="bg-indigo-600 rounded-lg h-1 w-0" data-target="notification.countdown"></div>
+      <div class="bg-indigo-600 rounded-lg h-1 w-0" data-notification-target="countdown"></div>
     <% end %>
   </div>
 </div>

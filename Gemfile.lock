@@ -149,7 +149,7 @@ GEM
     thread_safe (0.3.6)
     turbo-rails (0.5.12)
       rails (>= 6.0.0)
-    tzinfo (1.2.9)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     view_component (2.35.0)
       activesupport (>= 5.0.0, < 8.0)
